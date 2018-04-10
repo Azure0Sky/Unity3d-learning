@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D054EB5D-B774-F236-CFAB-41009051BDCE}</ProjectGuid>
+    <ProjectGuid>{382157EA-7336-6AB2-C806-5BCD356226F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -235,6 +235,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Action.cs" />
     <Compile Include="Assets\Scripts\ClickGUI.cs" />
     <Compile Include="Assets\Scripts\FirstController.cs" />
     <Compile Include="Assets\Scripts\GameBase.cs" />
