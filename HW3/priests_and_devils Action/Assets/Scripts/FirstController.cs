@@ -1,4 +1,4 @@
-﻿ using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameBase;
@@ -73,6 +73,7 @@ public class FirstController : MonoBehaviour, ISceneController, IUserAction
             return;
 
         //boat.MoveToOpposite();
+        actionManager.MoveBoat( boat );
         uGUI.SetStatus( CheckStatus() );
     }
 
@@ -84,22 +85,24 @@ public class FirstController : MonoBehaviour, ISceneController, IUserAction
         BankController bank;
         if ( character.IsOnBoat() ) {
 
+            Debug.Log( "character on boat" );
             if ( boat.WhichSide() == -1 ) {      // from side
                 bank = fromBank;
             } else {                             // to side
                 bank = toBank;
             }
 
+            Vector3 middle = bank.GetEmptyPosition();
+            middle.x = character.GetGameObject().transform.position.x;
+
+            //actionManager.MoveCharacter( character.GetGameObject(), middle );
+            actionManager.MoveCharacter( character.GetGameObject(), bank.GetEmptyPosition() );
+
             character.GetOnBank( bank );
             //character.MoveToPosition( bank.GetEmptyPosition() );
             bank.GetOnBank( character );
             boat.GetOffBoat( character.GetId() );
 
-            Vector3 middle = character.GetGameObject().transform.position;
-            middle.y = bank.GetEmptyPosition().y;
-
-            actionManager.MoveCharacter( character.GetGameObject(), middle );
-            actionManager.MoveCharacter( character.GetGameObject(), bank.GetEmptyPosition() );
 
         } else {
 
@@ -111,19 +114,24 @@ public class FirstController : MonoBehaviour, ISceneController, IUserAction
 
             bank = character.GetBankController();
 
+            Vector3 middle = boat.GetEmptyPos();
+            middle.y = character.GetGameObject().transform.position.y;
+
+            //actionManager.MoveCharacter( character.GetGameObject(), middle );
+            actionManager.MoveCharacter( character.GetGameObject(), boat.GetEmptyPos() );
+
             character.GetOnBoat( boat );
             //character.MoveToPosition( boat.GetEmptyPos() );
             bank.GetOffBank( character.GetId() );
             boat.GetOnBoat( character );
 
-            Vector3 middle = 
 
         }
 
-        uGUI.SetStatus( CheckStatus() );
+        //uGUI.SetStatus( CheckStatus() );
     }
 
-    private int CheckStatus()       // 0: continue, 1: win, 2: game over;
+    public int CheckStatus()       // 0: continue, 1: win, 2: game over;
     {
         int priestNum = 0, devilNum = 0;
 
@@ -143,6 +151,9 @@ public class FirstController : MonoBehaviour, ISceneController, IUserAction
         priestNum = toBank.GetCharacterNum( GameBase.CharacterController.CharacterType.priest );
         devilNum = toBank.GetCharacterNum( GameBase.CharacterController.CharacterType.devil );
 
+        Debug.Log( "Priest: " + priestNum );
+        Debug.Log( "Devil" + devilNum );
+
         if ( priestNum + devilNum == 6 )
             return 1;
 
@@ -157,15 +168,25 @@ public class FirstController : MonoBehaviour, ISceneController, IUserAction
         return 0;
     }
 
+    public void SetGameStatus( int status )
+    {
+        uGUI.SetStatus( status );
+    }
+
     public void Restart()
     {
-        boat.Reset();
-        fromBank.Reset();
-        toBank.Reset();
+        //boat.Reset();
+        //fromBank.Reset();
+        //toBank.Reset();
 
-        for ( int i = 0; i < characters.Length; ++i ) {
-            characters[i].Reset();
-        }
+        //if ( boat.WhichSide() == 1 )
+        //    actionManager.MoveBoat( boat );
+
+        //for ( int i = 0; i < characters.Length; ++i ) {
+        //    actionManager.MoveCharacter( characters[i].GetGameObject(), fromBank.GetEmptyPosition() );
+        //}
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene( 0 );
     }
 
     public BankController GetBank_from()

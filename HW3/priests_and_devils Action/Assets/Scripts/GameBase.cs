@@ -29,8 +29,8 @@ namespace GameBase
     public interface IUserAction
     {
         void Restart();
-        //void MoveCharacter( CharacterController ctrClicked );
-        //void MoveBoat();
+        void MoveCharacter( CharacterController ctrClicked );
+        void MoveBoat();
     }
 
     public class Movement : MonoBehaviour
@@ -48,7 +48,7 @@ namespace GameBase
             if ( status == 1 ) {                                                    // character moves
                 if ( transform.position == middle && !middleArrived ) {
                     middleArrived = true;
-                } else if ( transform.position != middle && !middleArrived ) {       // moves to middle
+                } else if ( transform.position != middle && !middleArrived ) {      // moves to middle
                     moving = true;
                     transform.position = Vector3.MoveTowards( transform.position, middle, speed * Time.deltaTime );
                 } else if ( transform.position == dest ) {                          // arrives at destination
@@ -287,8 +287,8 @@ namespace GameBase
         ClickGUI click;
 
         CharacterController[] passengers;
-        //Vector3[] boatPos_from;
-        //Vector3[] boatPos_to;
+        Vector3[] boatPos_from;
+        Vector3[] boatPos_to;
 
         string name;
         int side;       // -1: from, 1: to
@@ -300,8 +300,8 @@ namespace GameBase
             click = boat.AddComponent( typeof( ClickGUI ) ) as ClickGUI;
 
             passengers = new CharacterController[2];
-            //boatPos_from = new Vector3[] { new Vector3( -1.25f, 1.47f ), new Vector3( -2.35f, 1.47f ) };
-            //boatPos_to = new Vector3[] { new Vector3( 2.35f, 1.47f ), new Vector3( 1.25f, 1.47f ) };
+            boatPos_from = new Vector3[] { new Vector3( -1.25f, 1.47f ), new Vector3( -2.35f, 1.47f ) };
+            boatPos_to = new Vector3[] { new Vector3( 2.35f, 1.47f ), new Vector3( 1.25f, 1.47f ) };
 
             name = "boat";
             side = -1;
@@ -322,12 +322,17 @@ namespace GameBase
             return side;
         }
 
-        //public void MoveToOpposite()
-        //{
-        //    //moveScript.SetDestination( new Vector3( boat.transform.position.x * -1.0f, boat.transform.position.y ) );
-        //    side *= -1;
+        public GameObject GetGameObject()
+        {
+            return boat;
+        }
 
-        //}
+        public void MoveToOpposite()
+        {
+            //moveScript.SetDestination( new Vector3( boat.transform.position.x * -1.0f, boat.transform.position.y ) );
+            side *= -1;
+
+        }
 
         public int GetEmptyIdx()
         {
@@ -341,14 +346,14 @@ namespace GameBase
             return emptyIdx;
         }
 
-        //public Vector3 GetEmptyPos()
-        //{
-        //    int emptyIdx = GetEmptyIdx();
-        //    if ( side == -1 )
-        //        return boatPos_from[emptyIdx];
-        //    else
-        //        return boatPos_to[emptyIdx];
-        //}
+        public Vector3 GetEmptyPos()
+        {
+            int emptyIdx = GetEmptyIdx();
+            if ( side == -1 )
+                return boatPos_from[emptyIdx];
+            else
+                return boatPos_to[emptyIdx];
+        }
 
         public int GetCharacterNum( CharacterController.CharacterType _type )
         {

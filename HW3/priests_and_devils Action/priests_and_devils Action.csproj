@@ -237,6 +237,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Action.cs" />
     <Compile Include="Assets\Scripts\ClickGUI.cs" />
+    <Compile Include="Assets\Scripts\DActionManager.cs" />
     <Compile Include="Assets\Scripts\FirstController.cs" />
     <Compile Include="Assets\Scripts\GameBase.cs" />
     <Compile Include="Assets\Scripts\UserGUI.cs" />
