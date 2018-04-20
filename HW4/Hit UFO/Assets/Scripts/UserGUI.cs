@@ -109,7 +109,8 @@ public class UserGUI : MonoBehaviour {
 
             // 用户点击射击
             if ( Input.GetButtonDown( "Fire1" ) ) {
-                userAction.Shoot( Input.mousePosition );
+                if ( start )
+                    userAction.Shoot( Input.mousePosition );
             }
 
         } else {                            // 游戏未开始
