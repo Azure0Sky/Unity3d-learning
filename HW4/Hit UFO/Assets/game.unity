@@ -189,6 +189,10 @@ GameObject:
   - component: {fileID: 670795983}
   - component: {fileID: 670795982}
   - component: {fileID: 670795981}
+  - component: {fileID: 670795988}
+  - component: {fileID: 670795987}
+  - component: {fileID: 670795986}
+  - component: {fileID: 670795985}
   - component: {fileID: 670795980}
   m_Layer: 0
   m_Name: Main Camera
@@ -205,7 +209,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 670795979}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2c310b25c2071441b29638c6e004a41, type: 3}
+  m_Script: {fileID: 11500000, guid: 94189813d19e0f5499ed21a225af3401, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!81 &670795981
@@ -271,3 +275,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &670795985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 670795979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13fe7dd8e285037498016fdf4e04c8e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &670795986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 670795979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b524296ef642f7241873cf8b00c09342, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &670795987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 670795979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6536d1cebeb2cef428cacd94c8873d3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &670795988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 670795979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4386283740055d44f91e356b84b2c7ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
