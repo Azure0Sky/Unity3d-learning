@@ -8,16 +8,19 @@ public class FirstController : MonoBehaviour, ISceneController, IUserAction
     DiskController diskController;
     DiskFactory diskFactory;
     ScoreController scoreController;
+    IActionManager actionManager;
 
     private int round = 1;                              // 回合数
     private float interval = 2.0f;                      // 发射一个飞碟的间隔时间
 
-    readonly private int scoreToRound2 = 10;            // 进入Round2所需分数
-    readonly private int scoreToRound3 = 25;            // 进入Round3所需分数
+    readonly private int scoreToRound2 = 2;            // 进入Round2所需分数
+    readonly private int scoreToRound3 = 5;            // 进入Round3所需分数
 
     private bool start;
 
     List<DiskData> diskLaunched;                        // 已经发射的飞碟，即显示在画面中的飞碟
+
+    Fly.Mode mode;
 
     void Awake()
     {
@@ -62,7 +65,6 @@ public class FirstController : MonoBehaviour, ISceneController, IUserAction
                 diskController.Retrieve( diskLaunched[i] );                 // 飞出范围，回收飞碟
                 uGUI.ReduceLife();
                 diskLaunched.RemoveAt( i );
-                Debug.Log( "Retrieve" );
 
             }
         }
@@ -77,19 +79,28 @@ public class FirstController : MonoBehaviour, ISceneController, IUserAction
         scoreController = Singleton<ScoreController>.Instance;
     }
 
-    public void StartGame()
+    public void StartGame( Fly.Mode mode )
     {
+        if ( mode == Fly.Mode.Kinematics )
+            actionManager = Singleton<SimActionManager>.Instance;
+        else
+            actionManager = Singleton<PhysicsActionManager>.Instance;
+
+        this.mode = mode;
         start = true;
         InvokeRepeating( "LaunchDisk", 1.0f, interval );        // 游戏开始1秒后发射第一个飞碟
     }
 
-    public void Restart()
+    public void Restart( Fly.Mode mode )
     {
         interval = 2.0f;
         round = 1;
         scoreController.Reset();
         diskLaunched = new List<DiskData>();
-        StartGame();
+
+        diskFactory.ResetAllDisksToMode( mode );
+
+        StartGame( mode );
     }
 
     public void Shoot( Vector3 pos )
@@ -103,7 +114,10 @@ public class FirstController : MonoBehaviour, ISceneController, IUserAction
 
         RaycastHit hit = hits[0];
         DiskData diskHit = hit.collider.gameObject.GetComponent<DiskData>();
-        scoreController.Record( diskHit );
+
+        if ( start )
+            scoreController.Record( diskHit );
+
         diskController.Explode( diskHit );
         diskLaunched.Remove( diskHit );
     }
@@ -111,13 +125,17 @@ public class FirstController : MonoBehaviour, ISceneController, IUserAction
     private void LaunchDisk()
     {
         DiskData disk = diskFactory.GetDisk( round );
-        diskController.Launch( disk );
+        actionManager.PlayDisk( disk );
         diskLaunched.Add( disk );
     }
 
     public void GameOver()
     {
         start = false;
+        for ( int i = 0; i < diskLaunched.Count; ++i ) {
+            diskController.Retrieve( diskLaunched[i] );
+        }
+
         CancelInvoke( "LaunchDisk" );
     }
 

@@ -23,8 +23,10 @@ GameObject:
   - component: {fileID: 136881008111101340}
   - component: {fileID: 23338454144464402}
   - component: {fileID: 114898292123042110}
+  - component: {fileID: 54749249157522178}
+  - component: {fileID: 114728960623460394}
   m_Layer: 0
-  m_Name: Strong
+  m_Name: Heavy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -115,6 +117,32 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1360181750764140}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54749249157522178
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1360181750764140}
+  serializedVersion: 2
+  m_Mass: 3
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &114728960623460394
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1360181750764140}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9863ace198c461e409fbd77e9415068c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114898292123042110
 MonoBehaviour:
   m_ObjectHideFlags: 1

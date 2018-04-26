@@ -37,7 +37,7 @@ public class UserGUI : MonoBehaviour {
 
         buttonStyle = new GUIStyle( "button" )
         {
-            fontSize = 30,
+            fontSize = 25,
             alignment = TextAnchor.MiddleCenter
         };
 
@@ -87,9 +87,9 @@ public class UserGUI : MonoBehaviour {
             GUI.Label( new Rect( Screen.width - 100, 10, 30, 40 ), "Life: ", infoStyle );
             for ( int i = 0; i < life; ++i ) {
                 GUI.Label( new Rect( Screen.width - 110 + i * 20, 55, 10, 40 ), "❤", heartStyle );
-                Debug.Log( life );
             }
 
+            // 游戏结束
             if ( life == 0 ) {
                 GUI.Label( new Rect( Screen.width / 2 - 75, Screen.height / 2 - 50, 150, 100 ), "Game Over", titleStyle );
                 GUI.Label( new Rect( Screen.width / 2 - 75, Screen.height / 2 + 70, 75, 50 ), "Your score: ", infoStyle );
@@ -97,10 +97,16 @@ public class UserGUI : MonoBehaviour {
 
                 userAction.GameOver();
 
-                if ( GUI.Button( new Rect( Screen.width / 2 - 55, Screen.height / 2 + 150, 110, 50 ), "Restart", buttonStyle ) ) {
+                if ( GUI.Button( new Rect( Screen.width / 2 - 180, Screen.height / 2 + 150, 360, 50 ), "Restart in Kinematics Mode", buttonStyle ) ) {
 
                     life = 5;
-                    userAction.Restart();
+                    userAction.Restart( Fly.Mode.Kinematics );
+                    return;
+
+                } else if ( GUI.Button( new Rect( Screen.width / 2 - 180, Screen.height / 2 + 210, 360, 50 ), "Restart in Physics Mode", buttonStyle ) ) {
+
+                    life = 5;
+                    userAction.Restart( Fly.Mode.Physics );
                     return;
 
                 }
@@ -117,9 +123,16 @@ public class UserGUI : MonoBehaviour {
 
             GUI.Label( new Rect( Screen.width / 2 - 75, Screen.height / 2 - 50, 150, 100 ), "Hit UFO !", titleStyle );
 
-            if ( GUI.Button( new Rect( Screen.width / 2 - 55, Screen.height / 2 + 50, 110, 50 ), "Start", buttonStyle ) ) {
+            if ( GUI.Button( new Rect( Screen.width / 2 - 180, Screen.height / 2 + 50, 360, 50 ), "Start in Kinematics Mode", buttonStyle ) ) {
+
                 start = true;
-                userAction.StartGame();
+                userAction.StartGame( Fly.Mode.Kinematics );
+
+            } else if ( GUI.Button( new Rect( Screen.width / 2 - 180, Screen.height / 2 + 110, 360, 50 ), "Start in Physics Mode", buttonStyle ) ) {
+
+                start = true;
+                userAction.StartGame( Fly.Mode.Physics );
+
             }
 
         }

@@ -9,8 +9,14 @@ public interface ISceneController
 
 public interface IUserAction
 {
-    void StartGame();
-    void Restart();
+    void StartGame( Fly.Mode mode );
+
+    void Restart( Fly.Mode mode );
     void GameOver();
     void Shoot( Vector3 pos );           // 点击画面即射击
+}
+
+public interface IActionManager
+{
+    void PlayDisk( DiskData disk );
 }

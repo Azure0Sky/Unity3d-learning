@@ -18,8 +18,6 @@ public class DiskFactory : MonoBehaviour {
         for ( int i = 0; i < freeDisk.Count; ++i ) {
             if ( freeDisk[i].type == type ) {
 
-                Debug.Log( "Get disk from free list" );
-
                 freeDisk[i].gameObject.SetActive( true );
                 diskPrefab = freeDisk[i].gameObject;
                 freeDisk.Remove( freeDisk[i] );
@@ -38,8 +36,8 @@ public class DiskFactory : MonoBehaviour {
                     diskPrefab = GameObject.Instantiate( Resources.Load( "Prefabs/Normal" ), oriPos, Quaternion.identity ) as GameObject;
                     break;
 
-                case DiskData.DiskType.strong:
-                    diskPrefab = GameObject.Instantiate( Resources.Load( "Prefabs/Strong" ), oriPos, Quaternion.identity ) as GameObject;
+                case DiskData.DiskType.heavy:
+                    diskPrefab = GameObject.Instantiate( Resources.Load( "Prefabs/Heavy" ), oriPos, Quaternion.identity ) as GameObject;
                     break;
 
                 case DiskData.DiskType.fast:
@@ -59,7 +57,6 @@ public class DiskFactory : MonoBehaviour {
     {
         for ( int i = 0; i < usedDisk.Count; ++i ) {
             if ( usedDisk[i].gameObject.GetInstanceID() == disk.gameObject.GetInstanceID() ) {
-                Debug.Log( "Free a disk" );
                 usedDisk.Remove( disk );
                 freeDisk.Add( disk );
 
@@ -69,6 +66,15 @@ public class DiskFactory : MonoBehaviour {
 
                 break;
             }
+        }
+    }
+
+    public void ResetAllDisksToMode( Fly.Mode mode )
+    {
+        for ( int i = 0; i < freeDisk.Count; ++i ) {
+            Fly flyScript = freeDisk[i].gameObject.GetComponent<Fly>();
+            flyScript.SetMode( mode );
+            flyScript.Reset();
         }
     }
 
