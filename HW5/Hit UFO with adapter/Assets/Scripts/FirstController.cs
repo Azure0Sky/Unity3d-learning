@@ -13,8 +13,8 @@ public class FirstController : MonoBehaviour, ISceneController, IUserAction
     private int round = 1;                              // 回合数
     private float interval = 2.0f;                      // 发射一个飞碟的间隔时间
 
-    readonly private int scoreToRound2 = 2;            // 进入Round2所需分数
-    readonly private int scoreToRound3 = 5;            // 进入Round3所需分数
+    readonly private int scoreToRound2 = 10;            // 进入Round2所需分数
+    readonly private int scoreToRound3 = 25;            // 进入Round3所需分数
 
     private bool start;
 

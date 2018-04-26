@@ -1,4 +1,4 @@
-﻿ using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GameBase;
@@ -14,7 +14,8 @@ public class FirstController : MonoBehaviour, ISceneController, IUserAction
 
     readonly Vector3 waterPos = new Vector3( 0, 0.64f, 0 );
 
-	void Awake () {     // Start?
+	void Awake ()
+    {
         Director director = Director.GetInstance();
         director.currentSceneController = this;
         uGUI = gameObject.AddComponent( typeof( UserGUI ) ) as UserGUI;
