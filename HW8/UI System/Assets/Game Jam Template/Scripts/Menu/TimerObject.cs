@@ -33,7 +33,7 @@ public class TimerObject : MonoBehaviour
             timerText.text = timerNum.ToString();
         }
 
-        if ( timerNum >= 10 ) {
+        if ( timerNum >= 3 ) {
             timerNum = 0;
             disable = true;
             //transform.gameObject.SetActive( false );
