@@ -4,10 +4,10 @@ using UnityEngine.EventSystems;
 
 public class ShowPanels : MonoBehaviour
 {
-	public GameObject optionsPanel;							//Store a reference to the Game Object OptionsPanel 
-	public GameObject optionsTint;							//Store a reference to the Game Object OptionsTint 
-	public GameObject menuPanel;							//Store a reference to the Game Object MenuPanel 
-	public GameObject pausePanel;                           //Store a reference to the Game Object PausePanel
+    public GameObject optionsPanel;							//Store a reference to the Game Object OptionsPanel 
+    public GameObject optionsTint;							//Store a reference to the Game Object OptionsTint 
+    public GameObject menuPanel;							//Store a reference to the Game Object MenuPanel 
+    public GameObject pausePanel;                           //Store a reference to the Game Object PausePanel
     public GameObject modalPanel;                           //Store a reference to the Game Object ModalPanel
     public GameObject modalTint;                            //Store a reference to the Game Object ModalTint
     public GameObject[] timerPanel;                         //Store references to the Game Object TimerPanel
@@ -38,7 +38,7 @@ public class ShowPanels : MonoBehaviour
 
         timerObjects = new TimerObject[4];
         for ( int i = 0; i < 4; ++i ) {
-            timerObjects[i] = timerPanel[i].transform.Find( "Timer" ).gameObject.GetComponent<TimerObject>();
+            timerObjects[i] = timerPanel[i].GetComponent<TimerObject>();
         }
     }
 
@@ -121,7 +121,6 @@ public class ShowPanels : MonoBehaviour
         for ( int i = 0; i < 4; ++i ) {
             if ( !timerPanel[i].activeSelf ) {
                 timerPanel[i].SetActive( true );
-                EventSystemChecker.menuEventSystem.SetSelectedGameObject( timerPanel[i] );
                 break;
             }
         }
@@ -140,6 +139,8 @@ public class ShowPanels : MonoBehaviour
             if ( timerObjects[i].disable ) {
                 timerObjects[i].SetDisable( false );
                 timerObjects[i].gameObject.SetActive( false );
+                --timerNumber;
+                Debug.Log( "Hide timer" );
             }
         }
     }
