@@ -6,16 +6,21 @@ using GameBase;
 public class ClickGUI : MonoBehaviour {
 
     IUserAction userAction;
-    GameBase.CharacterController thisCharacter;
+    MyCharacterController thisCharacter;
 
 	// Use this for initialization
 	void Start()
     {
-        userAction = Director.GetInstance().currentSceneController as IUserAction;
+        userAction = Director.GetInstance().CurrentSceneController as IUserAction;
 	}
 	
 	private void OnMouseDown()
     {
+        // User could do nothing when helping
+        if ( ( Director.GetInstance().CurrentSceneController as FirstController ).uGUI.GetStatus() == 3 ) {
+            return;
+        }
+
         if ( Movement.IsMoving() )
             return;
 
@@ -26,7 +31,7 @@ public class ClickGUI : MonoBehaviour {
         }
     }
 
-    public void SetCharacter( GameBase.CharacterController cha )
+    public void SetCharacter( GameBase.MyCharacterController cha )
     {
         thisCharacter = cha;
     }

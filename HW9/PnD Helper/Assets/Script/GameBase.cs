@@ -7,7 +7,7 @@ namespace GameBase
     public class Director : System.Object
     {
         private static Director _instance;
-        public ISceneController currentSceneController { get; set; }
+        public ISceneController CurrentSceneController { get; set; }
 
         public static Director GetInstance()
         {
@@ -19,26 +19,12 @@ namespace GameBase
         }
     }
 
-    public interface ISceneController
-    {
-        void LoadResources();
-        //void Pause();
-        //void Resume();
-    }
-
-    public interface IUserAction
-    {
-        void Restart();
-        void MoveCharacter( CharacterController ctrClicked );
-        void MoveBoat();
-    }
-
     public class Movement : MonoBehaviour
     {
-        float speed = 10.0f;
+        public float speed = 10.0f;
         Vector3 dest;
         Vector3 middle;
-        int status = 0;     // 0 means no moving, 1 means character's moving, 2 means boat's moving
+        int status = 0;     // 0: no moving, 1: character's moving, 2: boat's moving
         bool middleArrived = false;
 
         static bool moving = false;
@@ -46,9 +32,10 @@ namespace GameBase
         private void Update()
         {
             if ( status == 1 ) {                                                    // character moves
+
                 if ( transform.position == middle && !middleArrived ) {
                     middleArrived = true;
-                } else if ( transform.position != middle && !middleArrived ) {       // moves to middle
+                } else if ( transform.position != middle && !middleArrived ) {      // moves to middle
                     moving = true;
                     transform.position = Vector3.MoveTowards( transform.position, middle, speed * Time.deltaTime );
                 } else if ( transform.position == dest ) {                          // arrives at destination
@@ -58,7 +45,9 @@ namespace GameBase
                 } else {                                                            // moves from middle to destination
                     transform.position = Vector3.MoveTowards( transform.position, dest, speed * Time.deltaTime );
                 }
+
             } else if ( status == 2 ) {                                             // boat moves
+
                 if ( transform.position != dest ) {                                 // moves to destination
                     moving = true;
                     transform.position = Vector3.MoveTowards( transform.position, dest, speed * Time.deltaTime );
@@ -66,6 +55,7 @@ namespace GameBase
                     status = 0;
                     moving = false;
                 }
+
             }
         }
 
@@ -76,16 +66,16 @@ namespace GameBase
 
             if ( transform.position.y == _dest.y ) {            // boat
                 status = 2;
-            } else if ( transform.position.y > _dest.y ) {      // character moves from coast to boat
+            } else if ( transform.position.y > _dest.y ) {      // character moves from bank to boat
                 middle.y = transform.position.y;
                 status = 1;
-            } else {                                            // character moves from boat to coast
+            } else {                                            // character moves from boat to bank
                 middle.x = transform.position.x;
                 status = 1;
             }
         }
 
-        static public bool IsMoving()
+        public static bool IsMoving()
         {
             return moving;
         }
@@ -97,7 +87,7 @@ namespace GameBase
     }
 
     /*------------------------------- CharacterController -------------------------------*/
-    public class CharacterController
+    public class MyCharacterController
     {
         public enum CharacterType { priest, devil };
         static int currID = 0;
@@ -113,7 +103,7 @@ namespace GameBase
         int id;
         public string name;
 
-        public CharacterController( CharacterType _type )
+        public MyCharacterController( CharacterType _type )
         {
             type = _type;
             id = currID++;
@@ -183,7 +173,7 @@ namespace GameBase
         {
             moveScript.Reset();
             isOnBoat = false;
-            bank = ( Director.GetInstance().currentSceneController as FirstController ).GetBank_from();
+            bank = ( Director.GetInstance().CurrentSceneController as FirstController ).GetBank_from();
             GetOnBank( bank );
             MoveToPosition( bank.GetEmptyPosition() );
             bank.GetOnBank( this );
@@ -195,7 +185,7 @@ namespace GameBase
     {
         GameObject bank;
 
-        CharacterController[] characters;
+        MyCharacterController[] characters;
         readonly Vector3[] Postion;              // characters' position on the bank
         int side;                                // -1: from side, 1: to side
             
@@ -213,8 +203,7 @@ namespace GameBase
                                             new Vector3( -4.65f, 1.9f ), new Vector3( -3.95f, 1.9f ), new Vector3( -3.25f, 1.9f )};
             }
 
-            characters = new CharacterController[6];
-                
+            characters = new MyCharacterController[6];
         }
 
         public int WhichSide()
@@ -233,7 +222,7 @@ namespace GameBase
             return Vector3.zero;
         }
 
-        public void GetOnBank( CharacterController character )
+        public void GetOnBank( MyCharacterController character )
         {
             int emptyIdx;
             for ( emptyIdx = 0; emptyIdx < 6; ++emptyIdx ) {
@@ -244,11 +233,11 @@ namespace GameBase
             characters[emptyIdx] = character;
         }
 
-        public CharacterController GetOffBank( int cid )
+        public MyCharacterController GetOffBank( int cid )
         {
             for ( int i = 0; i < characters.Length; ++i ) {
                 if ( characters[i] != null && characters[i].GetId() == cid ) {
-                    CharacterController temp = characters[i];
+                    MyCharacterController temp = characters[i];
                     characters[i] = null;
                     return temp;
                 }
@@ -257,7 +246,7 @@ namespace GameBase
             return null;
         }
 
-        public int GetCharacterNum( CharacterController.CharacterType _type )
+        public int GetCharacterNum( MyCharacterController.CharacterType _type )
         {
             int res = 0;
             for ( int i = 0; i < characters.Length; ++i ) {
@@ -268,9 +257,21 @@ namespace GameBase
             return res;
         }
 
+        public MyCharacterController GetOneCharacter( MyCharacterController.CharacterType _type )
+        {
+            MyCharacterController one = null;
+            for ( int i = 0; i < characters.Length; ++i ) {
+                if( characters[i] != null && characters[i].GetTheType() == _type ) {
+                    one = characters[i];
+                }
+            }
+
+            return one;
+        }
+
         public void Reset()
         {
-            characters = new CharacterController[6];
+            characters = new MyCharacterController[6];
         }
     }
 
@@ -281,11 +282,10 @@ namespace GameBase
         Movement moveScript;
         ClickGUI click;
 
-        CharacterController[] passengers;
+        MyCharacterController[] passengers;
         Vector3[] boatPos_from;
         Vector3[] boatPos_to;
 
-        string name;
         int side;       // -1: from, 1: to
 
         public BoatController()
@@ -294,11 +294,10 @@ namespace GameBase
             moveScript = boat.AddComponent( typeof( Movement ) ) as Movement;
             click = boat.AddComponent( typeof( ClickGUI ) ) as ClickGUI;
 
-            passengers = new CharacterController[2];
+            passengers = new MyCharacterController[2];
             boatPos_from = new Vector3[] { new Vector3( -1.25f, 1.47f ), new Vector3( -2.35f, 1.47f ) };
             boatPos_to = new Vector3[] { new Vector3( 2.35f, 1.47f ), new Vector3( 1.25f, 1.47f ) };
 
-            name = "boat";
             side = -1;
         }
 
@@ -321,7 +320,6 @@ namespace GameBase
         {
             moveScript.SetDestination( new Vector3( boat.transform.position.x * -1.0f, boat.transform.position.y ) );
             side *= -1;
-
         }
 
         public int GetEmptyIdx()
@@ -345,7 +343,7 @@ namespace GameBase
                 return boatPos_to[emptyIdx];
         }
 
-        public int GetCharacterNum( CharacterController.CharacterType _type )
+        public int GetCharacterNum( MyCharacterController.CharacterType _type )
         {
             int res = 0;
             if ( passengers[0] != null && passengers[0].GetTheType() == _type )
@@ -356,14 +354,26 @@ namespace GameBase
             return res;
         }
 
-        public void GetOnBoat( CharacterController cha )
+        public MyCharacterController GetOneCharacter( MyCharacterController.CharacterType _type )
+        {
+            MyCharacterController one = null;
+            if ( passengers[0] != null && passengers[0].GetTheType() == _type ) {
+                one = passengers[0];
+            } else if ( passengers[1] != null && passengers[1].GetTheType() == _type ) {
+                one = passengers[1];
+            }
+
+            return one;
+        }
+
+        public void GetOnBoat( MyCharacterController cha )
         {
             passengers[GetEmptyIdx()] = cha;
         }
 
-        public CharacterController GetOffBoat( int cid )
+        public MyCharacterController GetOffBoat( int cid )
         {
-            CharacterController cha = null;
+            MyCharacterController cha = null;
             if ( passengers[0] != null && passengers[0].GetId() == cid ) {
                 cha = passengers[0];
                 passengers[0] = null;
@@ -386,7 +396,7 @@ namespace GameBase
             if ( side == 1 )
                 MoveToOpposite();
 
-            passengers = new CharacterController[2];
+            passengers = new MyCharacterController[2];
         }
 
     }
