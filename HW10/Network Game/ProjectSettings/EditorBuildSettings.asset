@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 0
+    path: Assets/Scenes/Menu/SplashScreen.unity
+    guid: 2390ad05e15bf4f29a90f636b5ce8f3d
+  - enabled: 0
+    path: Assets/Scenes/Menu/LobbyScene.unity
+    guid: 36e75a5ad0c2df847b41f2c664f486c6
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/desert1.unity
+    guid: 53dbee9b5f0f43642ab7e99460ca86d2
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/desert2.unity
+    guid: c38f6796d427449deb8e7acb4178b224
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/desert3.unity
+    guid: d9e047a4ab0744e3cb3600590c49f9f4
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/desert4.unity
+    guid: 734d1d46f7de94618ba84fc9aa064a11
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/desert5.unity
+    guid: 76a3391b895b54d8db279d96652ad927
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/snow1.unity
+    guid: ae0663160781f4b06a06258752da60ee
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/snow2.unity
+    guid: e28709eebd4114c52882cf9320ef56a8
+  - enabled: 0
+    path: Assets/Scenes/Multiplayer/snow3.unity
+    guid: 144160b3768a44f998f3dc4a11e35c42
+  - enabled: 1
+    path: Assets/Scenes/Multiplayer/snow4.unity
+    guid: 283cbaca2ae7449a0b5e9d8507c3fcea
+  - enabled: 1
+    path: Assets/Scenes/Multiplayer/snow5.unity
+    guid: 6c681889bf52c414597d51075024b945
+  - enabled: 1
+    path: Assets/Scenes/Singleplayer/Mission1_MoveAndShoot.unity
+    guid: 533f0f2ec7e5c438c8faba3e176ef2cf
+  - enabled: 1
+    path: Assets/Scenes/Singleplayer/Mission2_Chase.unity
+    guid: 8f8051b7d59504a6886a7ada2a9001c9
+  - enabled: 1
+    path: Assets/Scenes/Singleplayer/Mission3_Escort.unity
+    guid: 9d2ee5769dc904a4fbfe72105cd159e6
+  - enabled: 1
+    path: Assets/Scenes/Singleplayer/Mission4_GetToLocation.unity
+    guid: 7dba9a92a7dbf48c88d66aaabcf0aa98
+  - enabled: 1
+    path: Assets/Scenes/Singleplayer/Mission5_VIPTakedown.unity
+    guid: 21b08b288236b487e8ba4a71df9295e4
+  - enabled: 1
+    path: Assets/Scenes/Singleplayer/Mission6_Collect.unity
+    guid: acd728accaec1470a95d1657ff170252
+  - enabled: 1
+    path: Assets/Scenes/Singleplayer/Mission7_GetToLocationAdvanced.unity
+    guid: c6ab0258ae7cf4f2e9a609e6e0d50a36
+  - enabled: 1
+    path: Assets/Scenes/Singleplayer/Mission8_EscortAndChase.unity
+    guid: 890529c1940c1410ab6ff96225bdad81
+  - enabled: 1
+    path: Assets/Scenes/Singleplayer/Mission9_DefendTheBase.unity
+    guid: 27d399d3761534db887ee55d21595d8e
+  - enabled: 1
+    path: Assets/Scenes/Singleplayer/Mission10_Survive.unity
+    guid: 43f4dc3769fd541c597236fe15587bbd
+  - enabled: 1
+    path: Assets/Scenes/Singleplayer/ShootingRange.unity
+    guid: 0c68a706224c244fcabd4e2d7781b758
+  m_configObjects: {}
